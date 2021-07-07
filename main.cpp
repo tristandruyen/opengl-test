@@ -2,7 +2,9 @@
 #include <GL/glew.h>
 #define GLFW_DLL
 #include <GLFW/glfw3.h>
+#include <iostream>
 #include <stdio.h>
+#include <string.h>
 
 int main(void) {
   GLFWwindow *window;
@@ -10,7 +12,6 @@ int main(void) {
   /* Initialize the library */
   if (!glfwInit())
     return -1;
-
 
   /* Create a windowed mode window and its OpenGL context */
   window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -26,9 +27,10 @@ int main(void) {
   GLenum err = glewInit();
   if (GLEW_OK != err) {
     /* Problem: glewInit failed, something is seriously wrong. */
-    printf("Error: %s\n", glewGetErrorString(err));
+    std::cout << "Error !";
   }
-  printf("Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
+  std::cout << "Glew Version: " << glewGetString(GLEW_VERSION) << std::endl;
+  std::cout << "GL Version:   " << glGetString(GL_VERSION) << std::endl;
 
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window)) {
