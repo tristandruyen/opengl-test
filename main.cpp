@@ -7,16 +7,16 @@
 
 #include <iostream>
 
-int initGlfw(GLFWwindow* window) {
+int initGlfw(GLFWwindow** window) {
     if (!glfwInit()) return -1;
 
-    window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    *window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window) {
         glfwTerminate();
         return -1;
     }
 
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(*window);
     return 0;
 }
 
@@ -31,10 +31,7 @@ void initGlew() {
 
 int main(void) {
     GLFWwindow* window;
-    if (initGlfw(window) != 0) {
-        return -1;
-    };
-
+    initGlfw(&window);
     initGlew();
 
     float positions[6] = {
@@ -47,14 +44,14 @@ int main(void) {
     glBufferData(GL_ARRAY_BUFFER, 6, positions, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2,
+                          (const char*)0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);  // Unbind Buffer
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
-
         glfwSwapBuffers(window);
 
         glfwPollEvents();
