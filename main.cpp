@@ -54,12 +54,9 @@ int main(void) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         glDrawArrays(GL_TRIANGLES, 0, 3);
-        // glDrawElements(mode, GLsizei count, GLenum type, const void
-        // *indices)
-        /* Swap front and back buffers */
+
         glfwSwapBuffers(window);
 
-        /* Poll for and process events */
         glfwPollEvents();
     }
 
