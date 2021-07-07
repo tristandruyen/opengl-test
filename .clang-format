@@ -1,0 +1,15 @@
+---
+# We'll use defaults from the LLVM style, but with 4 columns indentation.
+BasedOnStyle: Google
+IndentWidth: 4
+---
+Language: Cpp
+# Force pointers to the type for C++.
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveBitFields: Consecutive 
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: true
+DerivePointerAlignment: false
+PointerAlignment: Left
+---
