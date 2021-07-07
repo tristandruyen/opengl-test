@@ -10,7 +10,7 @@ LFLAGS = -L /usr/lib
 # windoof ###
 #
 #MFLAGS = -mwindows
-#LDFLAGS = -lglew32s -lglfw3 -lglfw3dll -lpthread -lgdi32 -lopengl32
+#LDFLAGS = -lglew32 -lglew32s -lglfw3 -lglfw3dll -lpthread -lgdi32 -lopengl32
 #IFLAGS = -I H:\Code\Libs\glfw-3.3.4.bin.WIN64\include
 #LFLAGS = -L H:\Code\Libs\glfw-3.3.4.bin.WIN64\lib-mingw-w64 -L /usr/local/lib
 #############
