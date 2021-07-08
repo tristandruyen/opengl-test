@@ -18,6 +18,12 @@ LFLAGS = -L /usr/lib
 build: main.cpp
 	g++ $(MFLAGS) $(CFLAGS) -o $(NAME) main.cpp $(LDFLAGS) $(LFLAGS) $(IFLAGS)
 
+build_debug:
+	g++ $(MFLAGS) $(CFLAGS) -o $(NAME) main.cpp $(LDFLAGS) $(LFLAGS) $(IFLAGS) -D_DEBUG -ggdb
+
+debug: build_debug
+	gdb -q -batch -ex run -ex backtrace ./$(NAME)
+
 .PHONY: test clean
 
 test: build
