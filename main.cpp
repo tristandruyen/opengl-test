@@ -128,10 +128,10 @@ int main(void) {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
 
-    ShaderProgramSource shaderSource = ParseShader("res/shaders/Basic.shader");
+    ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
 
     unsigned int shader =
-        CreateShader(shaderSource.VertexSource, shaderSource.FragmentSource);
+        CreateShader(source.VertexSource, source.FragmentSource);
 
     glUseProgram(shader);
 
@@ -144,6 +144,7 @@ int main(void) {
 
         glfwPollEvents();
     }
+    glDeleteProgram(shader);
 
     glfwTerminate();
     return 0;
