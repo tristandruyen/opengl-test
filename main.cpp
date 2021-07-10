@@ -11,9 +11,9 @@
 #include <sstream>
 #include <string>
 
-#ifdef _DEBUG
 #define ASSERT(x) \
     if (!(x)) __builtin_trap();
+#ifdef _DEBUG
 #define GLCall(x)   \
     GLClearError(); \
     x;              \
@@ -126,6 +126,7 @@ int initGlfw(GLFWwindow** window) {
     }
 
     glfwMakeContextCurrent(*window);
+    glfwSwapInterval(1);
     return 0;
 }
 
@@ -182,15 +183,27 @@ int main(void) {
 
     unsigned int shader =
         CreateShader(source.VertexSource, source.FragmentSource);
-
     GLCall(glUseProgram(shader));
 
+    GLCall(int location = glGetUniformLocation(shader, "u_Color"));
+    ASSERT(location != -1);
+    GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
+
+    float r=0.0;
+    float incr = 0.05f;
     while (!glfwWindowShouldClose(window)) {
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT,
-                              nullptr)  // FIXME: make unsigned
-        );
+        GLCall(glUniform4f(location,r, 0.3f, 0.8f, 1.0f));
+        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
+
+        if (r >= 1.0f)
+            incr = -0.05f;
+        else if (r <= 0.0f) {
+            incr = 0.05f;
+        }
+
+        r+=incr;
 
         GLCall(glfwSwapBuffers(window));
 
