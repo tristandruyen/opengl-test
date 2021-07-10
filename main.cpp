@@ -196,9 +196,9 @@ int main(void) {
     ASSERT(location != -1);
     GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
 
+    GLCall(glBindVertexArray(0)); // Unbind first so unbindings dont affect it
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-    GLCall(glBindVertexArray(0));
     GLCall(glUseProgram(0));
 
     float r    = 0.0;
@@ -210,7 +210,6 @@ int main(void) {
         GLCall(glUseProgram(shader));
         GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));  // set color
         GLCall(glBindVertexArray(vao));
-        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuffer));
 
         // DRAW
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
