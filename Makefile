@@ -4,7 +4,7 @@ MFLAGS = -m64
 # unix ######
 #
 LDFLAGS = -lGLEW -lglfw -lGL -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi # unix
-IFLAGS = -I /usr/include
+IFLAGS = -I /usr/include -I ./src
 LFLAGS = -L /usr/lib
 #############
 # windoof ###
@@ -14,12 +14,18 @@ LFLAGS = -L /usr/lib
 #IFLAGS = -I H:\Code\Libs\glfw-3.3.4.bin.WIN64\include
 #LFLAGS = -L H:\Code\Libs\glfw-3.3.4.bin.WIN64\lib-mingw-w64 -L /usr/local/lib
 #############
+#############SOURCES = main.cpp file1.cpp
+SOURCES =  ./src/Renderer.cpp ./src/main.cpp
+DFLAGS = -D_DEBUG -ggdb
 
-build: main.cpp
-	g++ $(MFLAGS) $(CFLAGS) -o $(NAME) main.cpp $(LDFLAGS) $(LFLAGS) $(IFLAGS)
+
+all: build
+
+build:
+	g++ $(MFLAGS) $(CFLAGS) -o $(NAME) $(LDFLAGS) $(LFLAGS) $(IFLAGS) $(SOURCES)
 
 build_debug:
-	g++ $(MFLAGS) $(CFLAGS) -o $(NAME) main.cpp $(LDFLAGS) $(LFLAGS) $(IFLAGS) -D_DEBUG -ggdb
+	g++ $(MFLAGS) $(CFLAGS) -o $(NAME) $(LDFLAGS) $(LFLAGS) $(IFLAGS) $(DFLAGS) $(SOURCES)
 
 debug: build_debug
 	gdb -q -batch -ex run -ex backtrace ./$(NAME)
