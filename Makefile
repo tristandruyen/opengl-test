@@ -15,7 +15,7 @@ LFLAGS = -L /usr/lib
 #LFLAGS = -L H:\Code\Libs\glfw-3.3.4.bin.WIN64\lib-mingw-w64 -L /usr/local/lib
 #############
 #############SOURCES = main.cpp file1.cpp
-SOURCES =  ./src/Renderer.cpp ./src/main.cpp
+SOURCES =  ./src/IndexBuffer.cpp  ./src/VertexBuffer.cpp ./src/Renderer.cpp ./src/main.cpp
 DFLAGS = -D_DEBUG -ggdb
 
 
