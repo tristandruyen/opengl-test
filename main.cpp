@@ -119,6 +119,9 @@ static unsigned int CreateShader(const std::string& vertexShader,
 int initGlfw(GLFWwindow** window) {
     if (!glfwInit()) return -1;
 
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     *window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
     if (!window) {
         glfwTerminate();
@@ -161,6 +164,10 @@ int main(void) {
         2, 3, 0   // Tri 2
     };
 
+    unsigned int vao;
+    GLCall(glGenVertexArrays(1, &vao));
+    GLCall(glBindVertexArray(vao));
+
     // Vertex Buffer
     unsigned int buffer;
     GLCall(glGenBuffers(1, &buffer));
@@ -189,12 +196,23 @@ int main(void) {
     ASSERT(location != -1);
     GLCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
 
-    float r=0.0;
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+    GLCall(glBindVertexArray(0));
+    GLCall(glUseProgram(0));
+
+    float r    = 0.0;
     float incr = 0.05f;
     while (!glfwWindowShouldClose(window)) {
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
 
-        GLCall(glUniform4f(location,r, 0.3f, 0.8f, 1.0f));
+        // bind stuff
+        GLCall(glUseProgram(shader));
+        GLCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));  // set color
+        GLCall(glBindVertexArray(vao));
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibuffer));
+
+        // DRAW
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
 
         if (r >= 1.0f)
@@ -203,7 +221,7 @@ int main(void) {
             incr = 0.05f;
         }
 
-        r+=incr;
+        r += incr;
 
         GLCall(glfwSwapBuffers(window));
 
